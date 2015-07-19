@@ -118,6 +118,35 @@ hist(
 ```
 
 
+### Calculate and report the mean and median of the total number of steps taken per day
+
+```{r}
+total_mean <- format(
+    mean(per_day$steps_total, na.rm = TRUE), 
+    digits = 0, 
+    big.mark = ",", 
+    scientific = FALSE
+    )
+
+total_median <- format(
+    median(per_day$steps_total, na.rm = TRUE), 
+    digits = 0, 
+    big.mark = ",", 
+    scientific = FALSE
+    )
+```
+
+
+As the data summary below shows:
+
+- the **mean** is `r total_mean`, and
+- the **median** is `r total_median`.
+
+```{r}
+summary(per_day$steps_total, digits = 5)
+```
+
+
 
 ## What is the average daily activity pattern?
 

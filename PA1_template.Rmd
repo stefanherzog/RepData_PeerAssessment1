@@ -39,6 +39,51 @@ load.packages(c("dplyr",
 
 ## Loading and preprocessing the data
 
+Unzip the ZIP-file.
+
+```{r}
+
+# unzip(zipfile = "activity.zip")
+
+```
+
+
+Read the CSV-file using `read_delim` from the `readr`package.
+
+```{r}
+dat <- read_delim(file = "activity.zip", 
+                  delim = ",",
+                  col_types = list(col_integer(),
+                                   col_datetime(),
+                                   col_integer()))
+```
+
+There are **`r format(nrow(dat), big.mark = ",")` observations** 
+in this data set, which is **the 
+`r ifelse(nrow(dat) == 17568, "same", "not the same")`**
+as the 17,568 observations mentioned in the instructions.
+
+The data types of the three variables are:
+
+```{r}
+glimpse(dat)
+```
+
+These are the six and last six observations, respectively.
+
+```{r}
+head(dat)
+tail(dat)
+```
+
+Here are summary statistics for the three variables.
+
+```{r}
+lapply(dat, summary)
+```
+
+
+
 
 
 ## What is mean total number of steps taken per day?

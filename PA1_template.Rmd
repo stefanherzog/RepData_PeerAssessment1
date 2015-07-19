@@ -150,12 +150,15 @@ summary(per_day$steps_total, digits = 5)
 
 ## What is the average daily activity pattern?
 
-Calculate the mean steps taken for each interval
+Calculate the average (i.e., mean) number of steps for each interval.
 
 ```{r}
 
-per_interval <- summarize(group_by(dat, interval),
-                                  avg_steps = mean(steps, na.rm = TRUE))
+per_interval <- summarize(
+    group_by(dat, interval),
+    avg_steps = mean(steps, na.rm = TRUE)
+)
+
 ```
 
 
@@ -167,7 +170,8 @@ with(per_interval, {
     plot(interval, avg_steps, 
          type = "l", 
          col = "blue", 
-         lwd = 2)    
+         lwd = 2, 
+         ylab = "Mean number total steps/day")    
 })
 ```
 
@@ -205,7 +209,7 @@ points(
     cex = 1.5, 
     pch = 19)
 
-abline(h = interval_max_steps, col = "red")
+abline(v = interval_max_steps, col = "red")
 ```
 
 

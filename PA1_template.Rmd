@@ -116,7 +116,7 @@ hist(
     per_day$steps_total, 
     breaks = 50, 
     col = "red",
-    xlab = "Steps per day",
+    xlab = "Total steps per day",
     main = "")
 ```
 
@@ -174,7 +174,7 @@ with(per_interval, {
          type = "l", 
          col = "blue", 
          lwd = 2, 
-         ylab = "Mean number total steps/day")    
+         ylab = "Mean number total steps/interval")    
 })
 ```
 
@@ -202,7 +202,8 @@ with(per_interval, {
     plot(interval, avg_steps, 
          type = "l", 
          col = "blue", 
-         lwd = 2)    
+         lwd = 2,
+         ylab = "Mean number total steps/interval")    
 })
 
 points(
@@ -235,19 +236,27 @@ or `r format(100*(NAs_rowd_na/nrow(dat)), digits = 2)`%).
 ### Strategy for filling in all of the missing values
 
 For any missing observation of steps, I will impute the **mean** value observed
-for the corresponding interval in all other rows. 
+for the corresponding interval on all other days. 
 
 
 ### Create new dataset with the missing data filled in.
 
+
+Copy original dataset.
+
 ```{r}
-# Copy original dataset.
 dat_imp <- dat
+```
 
-# Find row numbers of rows with missing values in "steps".
+Find row numbers of rows with missing values in "steps".
+
+```{r}
 dat_NA_indices <- which(is.na(dat_imp$steps))
+```
 
-# Loop through those rows and insert imputed values.
+Loop through those rows and insert imputed values.
+
+```{r}
 for (i in dat_NA_indices) {
     
     # interval of current case i
@@ -273,7 +282,7 @@ hist(
     per_day_imp$steps_total, 
     breaks = 50, 
     col = "red",
-    xlab = "Steps per day",
+    xlab = "Total steps per day",
     main = "Imputed data!")
 ```
 
@@ -340,15 +349,14 @@ per_interval_day_type_imp <- summarize(
 ggplot(per_interval_day_type_imp, 
        aes(interval, avg_steps)) +
     theme_bw() +
-    geom_line(color = "blue", size = 1.5) +
+    geom_line(color = "blue", size = .8) +
     xlab("Interval") + 
-    ylab("Mean number of steps") +
+    ylab("Mean number of steps/interval") +
     facet_grid(day_type ~ .) 
         
 ```
 
-It seems that the person got active somewhat later in the day on weekends
-(which is not unexpected).
+It seems that the person got active somewhat later in the day on weekends.
 
 
 

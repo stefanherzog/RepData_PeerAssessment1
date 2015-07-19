@@ -210,8 +210,124 @@ abline(h = interval_max_steps, col = "red")
 
 
 
-
 ## Imputing missing values
+
+### Calculate and report the total number of missing values in the dataset
+
+Calculate the number of rows with at least one NA in any of the three columns.
+
+```{r}
+NAs_rowd_na <- sum(apply(is.na(dat), 1, sum) > 0)
+```
+
+Threre are **`r format(NAs_rowd_na, big.mark = ",")`** rows with missing values 
+(out of `r format(nrow(dat), big.mark = ",")` total number of rows; 
+or `r format(100*(NAs_rowd_na/nrow(dat)), digits = 2)`%).
+
+
+### Strategy for filling in all of the missing values
+
+For any missing observation of steps, I will impute the **mean** value observed
+for the corresponding interval in all other rows. 
+
+
+### Create new dataset with the missing data filled in.
+
+```{r}
+# Copy original dataset.
+dat_imp <- dat
+
+# Find row numbers of rows with missing values in "steps".
+dat_NA_indices <- which(is.na(dat_imp$steps))
+
+# Loop through those rows and insert imputed values.
+for (i in dat_NA_indices) {
+    
+    # interval of current case i
+    interval_i <- dat_imp[i, "interval"] %>% unlist
+    
+    # replacement value for current case i 
+    impute_value_i <- per_interval[which(
+        per_interval$interval == interval_i),
+        "avg_steps"] %>% unlist
+    
+    # insert replacement value for current case i 
+    dat_imp[i,"steps"] <- impute_value_i
+}
+```
+
+
+### Histogram of the total number of steps taken each day (imputed data)
+
+```{r}
+per_day_imp <- summarize(group_by(dat_imp, date),
+                     steps_total = sum(steps))
+hist(
+    per_day_imp$steps_total, 
+    breaks = 50, 
+    col = "red",
+    xlab = "Steps per day",
+    main = "Imputed data!")
+```
+
+
+### Calculate and report the mean and median total number of steps taken per day (imputed data)
+
+```{r}
+total_mean_imp <- format(
+    mean(per_day_imp$steps_total, na.rm = TRUE), 
+    digits = 0, 
+    big.mark = ",", 
+    scientific = FALSE
+    )
+
+total_median_imp <- format(
+    median(per_day_imp$steps_total, na.rm = TRUE), 
+    digits = 0, 
+    big.mark = ",", 
+    scientific = FALSE
+    )
+```
+
+As the data summary below shows, for the **imputed data**:
+
+- the **mean** is `r total_mean_imp` (vs. before: `r total_mean`), and
+- the **median** is `r total_median_imp`  (vs. before: `r total_median`).
+
+```{r}
+summary(per_day_imp$steps_total, digits = 5)
+```
+
+The mean and median number of total steps per day is roughly the **same** 
+when using the imputed data, where missing values were replaced with 
+the mean value observed for the same interval.
+
+```{r}
+
+plot(
+    per_interval$interval, per_interval$avg_steps,
+    type = "l",
+    col = "blue",
+    lwd = 2
+)
+
+
+per_interval_imp <- summarize(
+    group_by(dat_imp, interval),
+    avg_steps = mean(steps, na.rm = TRUE)
+)
+
+points(add = TRUE,
+    per_interval_imp$interval, per_interval_imp$avg_steps,
+    type = "l",
+    col = "green",
+    lwd = 2
+)
+
+
+```
+
+
 
 
 
@@ -221,4 +337,3 @@ abline(h = interval_max_steps, col = "red")
 
 
 [Rproj]: https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects
-

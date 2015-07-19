@@ -39,15 +39,6 @@ load.packages(c("dplyr",
 
 ## Loading and preprocessing the data
 
-Unzip the ZIP-file.
-
-```{r}
-
-# unzip(zipfile = "activity.zip")
-
-```
-
-
 Read the CSV-file using `read_delim` from the `readr`package.
 
 ```{r}

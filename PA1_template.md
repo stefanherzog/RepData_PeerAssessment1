@@ -1,6 +1,7 @@
 # Reproducible Research: Peer Assessment 1
 
 
+
 This project makes use of [RStudio's projects][Rproj] ("*.Rproj").
 The folder, in which the .Rproj-file is located in,
 is automatically set as the **working directory** by RStudio
@@ -30,7 +31,8 @@ load.packages <- function(packages) {
 # Load the packages
 load.packages(c("dplyr",
                 "ggplot2", 
-                "readr"))
+                "readr", 
+                "knitr"))
 ```
 
 ```
@@ -45,6 +47,13 @@ load.packages(c("dplyr",
 ## 
 ##     intersect, setdiff, setequal, union
 ```
+
+
+
+```r
+opts_chunk$set(fig.path = "figures")
+```
+
 
 
 ## Loading and preprocessing the data
@@ -197,7 +206,7 @@ hist(
     main = "")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
+![](figuresunnamed-chunk-10-1.png) 
 
 
 ### Calculate and report the mean and median of the total number of steps taken per day
@@ -264,7 +273,7 @@ with(per_interval, {
 })
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
+![](figuresunnamed-chunk-14-1.png) 
 
 
 ### 5-minute interval with maximum number of steps
@@ -306,7 +315,7 @@ points(
 abline(v = interval_max_steps, col = "red")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-15-1.png) 
+![](figuresunnamed-chunk-16-1.png) 
 
 
 
@@ -383,7 +392,7 @@ hist(
     main = "Imputed data!")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-20-1.png) 
+![](figuresunnamed-chunk-21-1.png) 
 
 
 ### Calculate and report the mean and median total number of steps taken per day (imputed data)
@@ -462,7 +471,7 @@ ggplot(per_interval_day_type_imp,
     facet_grid(day_type ~ .) 
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-24-1.png) 
+![](figuresunnamed-chunk-25-1.png) 
 
 It seems that the person got active somewhat later in the day on weekends.
 

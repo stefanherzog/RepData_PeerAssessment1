@@ -8,6 +8,7 @@ output:
 ---
 
 
+
 This project makes use of [RStudio's projects][Rproj] ("*.Rproj").
 The folder, in which the .Rproj-file is located in,
 is automatically set as the **working directory** by RStudio
@@ -35,9 +36,16 @@ load.packages <- function(packages) {
 # Load the packages
 load.packages(c("dplyr",
                 "ggplot2", 
-                "readr"))
+                "readr", 
+                "knitr"))
                 
 ```
+
+
+```{r}
+opts_chunk$set(fig.path = "figures")
+```
+
 
 
 ## Loading and preprocessing the data

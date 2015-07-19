@@ -150,6 +150,65 @@ summary(per_day$steps_total, digits = 5)
 
 ## What is the average daily activity pattern?
 
+Calculate the mean steps taken for each interval
+
+```{r}
+
+per_interval <- summarize(group_by(dat, interval),
+                                  avg_steps = mean(steps, na.rm = TRUE))
+```
+
+
+
+### Make a time series plot
+
+```{r}
+with(per_interval, {
+    plot(interval, avg_steps, 
+         type = "l", 
+         col = "blue", 
+         lwd = 2)    
+})
+```
+
+
+### 5-minute interval with maximum number of steps
+
+Find the interval with the maximum number of steps.
+
+```{r}
+interval_max_steps <- with(per_interval, {
+    interval[which.max(avg_steps)]
+})
+
+max_steps <- max(per_interval$avg_steps) %>%
+    format(digits = 0)
+```
+
+The interval **`r interval_max_steps`** has maximum number of steps 
+(= `r max_steps`) among all intervals.
+
+Plot the time series again including the maximum point (in red).
+
+```{r}
+with(per_interval, {
+    plot(interval, avg_steps, 
+         type = "l", 
+         col = "blue", 
+         lwd = 2)    
+})
+
+points(
+    x = interval_max_steps, 
+    y = max_steps, 
+    col = "red", 
+    cex = 1.5, 
+    pch = 19)
+
+abline(h = interval_max_steps, col = "red")
+```
+
+
 
 
 ## Imputing missing values

@@ -32,6 +32,7 @@ load.packages <- function(packages) {
 
 # Load the packages
 load.packages(c("dplyr",
+                "ggplot2", 
                 "readr"))
                 
 ```
@@ -327,15 +328,44 @@ points(add = TRUE,
     col = "green",
     lwd = 2
 )
+## Are there differences in activity patterns between weekdays and weekends?
 
+Classify each observation as pertaining to a weekend or a weekday. 
 
+```{r}
+weekend <- weekdays(dat_imp$date, abbreviate = FALSE) %in% 
+    c("Saturday", "Sunday")
+
+dat_imp$day_type <- NA
+dat_imp$day_type[weekend == TRUE] <- "weekend"
+dat_imp$day_type[weekend == FALSE] <- "weekday"
 ```
 
 
+Compare the daily activity between weekdays and weekends.
+
+```{r}
+
+per_interval_day_type_imp <- summarize(
+    group_by(dat_imp, day_type, interval),
+    avg_steps = mean(steps, na.rm = TRUE)
+)
 
 
+ggplot(per_interval_day_type_imp, 
+       aes(interval, avg_steps)) +
+    theme_bw() +
+    geom_line(color = "blue", size = 1.5) +
+    xlab("Interval") + 
+    ylab("Mean number of steps") +
+    facet_grid(day_type ~ .) 
+        
+```
 
-## Are there differences in activity patterns between weekdays and weekends?
+It seems that the person got active somewhat later in the day on weekends
+(which is not unexpected).
+
+
 
 
 

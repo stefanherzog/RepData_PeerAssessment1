@@ -106,6 +106,18 @@ one would get zero steps for that day, which does not make sense
 we cannot ascertain that the person walked zero steps on these days).
 
 
+### Make a histogram of the total number of steps taken each day
+
+```{r}
+hist(
+    per_day$steps_total, 
+    breaks = 50, 
+    col = "red",
+    xlab = "Steps per day",
+    main = "")
+```
+
+
 
 ## What is the average daily activity pattern?
 

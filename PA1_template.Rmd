@@ -307,27 +307,10 @@ The mean and median number of total steps per day is roughly the **same**
 when using the imputed data, where missing values were replaced with 
 the mean value observed for the same interval.
 
-```{r}
-
-plot(
-    per_interval$interval, per_interval$avg_steps,
-    type = "l",
-    col = "blue",
-    lwd = 2
-)
 
 
-per_interval_imp <- summarize(
-    group_by(dat_imp, interval),
-    avg_steps = mean(steps, na.rm = TRUE)
-)
 
-points(add = TRUE,
-    per_interval_imp$interval, per_interval_imp$avg_steps,
-    type = "l",
-    col = "green",
-    lwd = 2
-)
+
 ## Are there differences in activity patterns between weekdays and weekends?
 
 Classify each observation as pertaining to a weekend or a weekday. 

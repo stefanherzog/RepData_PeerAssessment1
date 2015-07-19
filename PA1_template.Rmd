@@ -32,8 +32,8 @@ load.packages <- function(packages) {
 
 # Load the packages
 load.packages(c("dplyr",
-                "magrittr",
                 "readr"))
+                
 ```
 
 
@@ -75,9 +75,35 @@ lapply(dat, summary)
 
 
 
-
-
 ## What is mean total number of steps taken per day?
+
+
+### Calculate the total number of steps taken per day
+
+I'm using the `dplyr` package.
+
+```{r}
+per_day <- summarize(group_by(dat, date),
+                     steps_total = sum(steps, na.rm = FALSE),
+                     NAs_prop = mean(is.na(steps)))
+```
+
+The stem-and-leaf display below shows that all days have 0% missing values in 
+the steps-variable, except for `r sum(per_day$NAs_prop == 1)` days where 
+100% of the observations are missing.
+In other words, for some reason no data was collected on those 
+`r sum(per_day$NAs_prop == 1)` days, but on the other 
+`r sum(per_day$NAs_prop == 0)` days, the data is complete.
+
+```{r}
+stem(per_day$NAs_prop)
+```
+
+Therefore I decided to set `na.rm = FALSE` when summing up the steps per day.
+If one were to set `na.rm = TRUE` then on they days were no data is available,
+one would get zero steps for that day, which does not make sense 
+(i.e., we just did not observe any steps for these days, 
+we cannot ascertain that the person walked zero steps on these days).
 
 
 

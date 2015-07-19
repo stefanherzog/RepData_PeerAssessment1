@@ -6,6 +6,37 @@ output:
 ---
 
 
+This project makes use of [RStudio's projects][Rproj] ("*.Rproj").
+The folder, in which the .Rproj-file is located in,
+is automatically set as the **working directory** by RStudio
+when opening the .Rproj-file.
+Thus there is no need to explicitly set the working directory.
+
+Clear the workspace.
+```{r}
+rm(list = ls())
+```
+
+Load the packages used in this project (and install them if they are not yet installed).
+The custom `load.packages` function takes a character vector of R-packages names.
+
+```{r}
+# Define the `load.packages` function
+load.packages <- function(packages) {
+    for (package in packages) {
+        if (!package %in% installed.packages())
+            install.packages(package)
+        library(package, character.only = TRUE)
+    }
+}
+
+# Load the packages
+load.packages(c("dplyr",
+                "magrittr",
+                "readr"))
+```
+
+
 ## Loading and preprocessing the data
 
 
@@ -23,3 +54,9 @@ output:
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+
+
+[Rproj]: https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects
+

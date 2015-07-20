@@ -2,6 +2,7 @@
 
 
 
+
 This project makes use of [RStudio's projects][Rproj] ("*.Rproj").
 The folder, in which the .Rproj-file is located in,
 is automatically set as the **working directory** by RStudio
@@ -50,9 +51,6 @@ load.packages(c("dplyr",
 
 
 
-```r
-opts_chunk$set(fig.path = "figures")
-```
 
 
 
@@ -206,7 +204,7 @@ hist(
     main = "")
 ```
 
-![](figuresunnamed-chunk-10-1.png) 
+![](figures/unnamed-chunk-10-1.png) 
 
 
 ### Calculate and report the mean and median of the total number of steps taken per day
@@ -273,7 +271,7 @@ with(per_interval, {
 })
 ```
 
-![](figuresunnamed-chunk-14-1.png) 
+![](figures/unnamed-chunk-14-1.png) 
 
 
 ### 5-minute interval with maximum number of steps
@@ -315,7 +313,7 @@ points(
 abline(v = interval_max_steps, col = "red")
 ```
 
-![](figuresunnamed-chunk-16-1.png) 
+![](figures/unnamed-chunk-16-1.png) 
 
 
 
@@ -392,7 +390,7 @@ hist(
     main = "Imputed data!")
 ```
 
-![](figuresunnamed-chunk-21-1.png) 
+![](figures/unnamed-chunk-21-1.png) 
 
 
 ### Calculate and report the mean and median total number of steps taken per day (imputed data)
@@ -471,7 +469,7 @@ ggplot(per_interval_day_type_imp,
     facet_grid(day_type ~ .) 
 ```
 
-![](figuresunnamed-chunk-25-1.png) 
+![](figures/unnamed-chunk-25-1.png) 
 
 It seems that the person got active somewhat later in the day on weekends.
 
